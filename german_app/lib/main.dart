@@ -7,8 +7,7 @@ void main() {
   runApp(MyApp());
 }
 
-void _something(){
-}
+void _something() {}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -65,12 +64,15 @@ class _MyHomePageState extends State<MyHomePage> {
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
-      _counter+=2;
+      _counter += 2;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    double maxWidth = MediaQuery.of(context).size.width;
+    double maxHeight = MediaQuery.of(context).size.height;
+
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -87,43 +89,47 @@ class _MyHomePageState extends State<MyHomePage> {
         // Center is a layout widget. It takes a single child and positions it
         // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-           Flexible(
-              flex: 5,
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Container(
-                      color: Colors.deepOrange,
-                      alignment: Alignment.topLeft,
-                      child: MenuButton(onPressed: _something),
-                      //width: MediaQuery.of(context).size.width
+            // Column is also a layout widget. It takes a list of children and
+            // arranges them vertically. By default, it sizes itself to fit its
+            // children horizontally, and tries to be as tall as its parent.
+            //
+            // Invoke "debug painting" (press "p" in the console, choose the
+            // "Toggle Debug Paint" action from the Flutter Inspector in Android
+            // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
+            // to see the wireframe for each widget.
+            //
+            // Column has various properties to control how it sizes itself and
+            // how it positions its children. Here we use mainAxisAlignment to
+            // center the children vertically; the main axis here is the vertical
+            // axis because Columns are vertical (the cross axis would be
+            // horizontal).
+            //mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                child: Flexible(
+                  flex: 5,
+                  child: Column(children: [
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage(
+                                  'assets/images/BackgroundGoethe.png'),
+                              fit: BoxFit.cover),
+                        ),
+                        alignment: Alignment.center,
+                        child: MenuButton(
+                            onPressed: _something, text: 'mein button'),
+                        //width: MediaQuery.of(context).size.width
+                      ),
                     ),
-                  ),
-                ]
-              )
-            ),
-            Flexible(
-              flex: 4,
-              child: Column(
-                children: [
-                  Row(
-                    children: [
+                  ]),
+                ),
+              ),
+              Flexible(
+                  flex: 4,
+                  child: Column(children: [
+                    Row(children: [
                       Text(
                         'Your number:',
                       ),
@@ -131,42 +137,37 @@ class _MyHomePageState extends State<MyHomePage> {
                         '$_counter',
                         style: Theme.of(context).textTheme.headline4,
                       ),
-                      ]
+                    ]),
+                    Container(
+                      color: Colors.blue,
+                      height: 100,
+                    )
+                  ])
+                  //Container(
+                  //  height: 200,
                   ),
-                  Container(
-                    color: Colors.blue,
-                    height: 100,
-                )
-              ]
-            )
-            //Container(
-            //  height: 200,
-            ),
-            Flexible(
-              flex: 1,
-              child: Row(
-                children: [
-                  Text('  '),
-                  Text('something'),
-                  RaisedButton(
-                      onPressed: _incrementCounter,
-                      //padding: EdgeInsets.all(5),
-                      //shape: CircleBorder(
-                       //   side: BorderSide(
-                       //       color: Colors.black,
-                       //       width: 0
-                       //   )
-                      //),
-                      //tooltip: 'plus two',
-                      child: TextBox(
-                        'Buttonfield'
+              Flexible(
+                  flex: 1,
+                  child: Row(
+                    children: [
+                      Text('  '),
+                      Text('something'),
+                      RaisedButton(
+                        onPressed: _incrementCounter,
+                        //padding: EdgeInsets.all(5),
+                        //shape: CircleBorder(
+                        //   side: BorderSide(
+                        //       color: Colors.black,
+                        //       width: 0
+                        //   )
+                        //),
+                        //tooltip: 'plus two',
+                        child: TextBox('Buttonfield'),
                       ),
-                    ), // This trailing comma makes auto-formatting nicer for build methods.
-                  ],
-                )
-            )
-          ]
-        ),
+                      // This trailing comma makes auto-formatting nicer for build methods.
+                    ],
+                  ))
+            ]),
       ),
     );
   }
