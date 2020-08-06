@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
         primarySwatch: Colors.grey,
+        fontFamily: 'nunito',
         // This makes the visual density adapt to the platform that you run
         // the app on. For desktop platforms, the controls will be smaller and
         // closer together (more dense) than on mobile platforms.
@@ -79,95 +80,72 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+    return Container(
+      decoration: BoxDecoration(
+        image: DecorationImage(
+            image: AssetImage('assets/images/BackgroundGoethe.png'),
+            fit: BoxFit.cover),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-            // Column is also a layout widget. It takes a list of children and
-            // arranges them vertically. By default, it sizes itself to fit its
-            // children horizontally, and tries to be as tall as its parent.
-            //
-            // Invoke "debug painting" (press "p" in the console, choose the
-            // "Toggle Debug Paint" action from the Flutter Inspector in Android
-            // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-            // to see the wireframe for each widget.
-            //
-            // Column has various properties to control how it sizes itself and
-            // how it positions its children. Here we use mainAxisAlignment to
-            // center the children vertically; the main axis here is the vertical
-            // axis because Columns are vertical (the cross axis would be
-            // horizontal).
-            //mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                child: Flexible(
-                  flex: 5,
-                  child: Column(children: [
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage(
-                                  'assets/images/BackgroundGoethe.png'),
-                              fit: BoxFit.cover),
-                        ),
-                        alignment: Alignment.center,
-                        child: MenuButton(
-                            onPressed: _something, text: 'mein button'),
-                        //width: MediaQuery.of(context).size.width
-                      ),
-                    ),
-                  ]),
-                ),
-              ),
-              Flexible(
-                  flex: 4,
-                  child: Column(children: [
-                    Row(children: [
-                      Text(
-                        'Your number:',
-                      ),
-                      Text(
-                        '$_counter',
-                        style: Theme.of(context).textTheme.headline4,
-                      ),
-                    ]),
-                    Container(
-                      color: Colors.blue,
-                      height: 100,
-                    )
-                  ])
-                  //Container(
-                  //  height: 200,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          title: Text(
+            widget.title,
+            style: TextStyle(fontWeight: FontWeight.w400, fontSize: 23),
+          ),
+          //backgroundColor: Color(0xB3FFFACD),
+            backgroundColor: Colors.white70,
+        ),
+        body: Center(
+          // Center is a layout widget. It takes a single child and positions it
+          // in the middle of the parent.
+          child: Column(
+              // Column is also a layout widget. It takes a list of children and
+              // arranges them vertically. By default, it sizes itself to fit its
+              // children horizontally, and tries to be as tall as its parent.
+              //
+              // Invoke "debug painting" (press "p" in the console, choose the
+              // "Toggle Debug Paint" action from the Flutter Inspector in Android
+              // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
+              // to see the wireframe for each widget.
+              //
+              // Column has various properties to control how it sizes itself and
+              // how it positions its children. Here we use mainAxisAlignment to
+              // center the children vertically; the main axis here is the vertical
+              // axis because Columns are vertical (the cross axis would be
+              // horizontal).
+              //mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Column(children: [
+                  Container(
+                    alignment: Alignment.center,
+                    margin:
+                        EdgeInsets.fromLTRB(0.0, 0.07 * maxHeight, 0.0, 0.0),
+                    child: MenuButton(onPressed: _something, text: 'Words'),
                   ),
-              Flexible(
-                  flex: 1,
-                  child: Row(
-                    children: [
-                      Text('  '),
-                      Text('something'),
-                      RaisedButton(
-                        onPressed: _incrementCounter,
-                        //padding: EdgeInsets.all(5),
-                        //shape: CircleBorder(
-                        //   side: BorderSide(
-                        //       color: Colors.black,
-                        //       width: 0
-                        //   )
-                        //),
-                        //tooltip: 'plus two',
-                        child: TextBox('Buttonfield'),
-                      ),
-                      // This trailing comma makes auto-formatting nicer for build methods.
-                    ],
-                  ))
-            ]),
+                  Container(
+                    alignment: Alignment.center,
+                    margin:
+                        EdgeInsets.fromLTRB(0.0, 0.07 * maxHeight, 0.0, 0.0),
+                    child: MenuButton(onPressed: _something, text: 'Lecture'),
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    margin:
+                        EdgeInsets.fromLTRB(0.0, 0.07 * maxHeight, 0.0, 0.0),
+                    child: MenuButton(onPressed: _something, text: 'Practice'),
+                  ),
+                  Container(
+                    alignment: Alignment.center,
+                    margin:
+                        EdgeInsets.fromLTRB(0.0, 0.07 * maxHeight, 0.0, 0.0),
+                    child: MenuButton(onPressed: _something, text: 'Game'),
+                  ),
+                ]),
+              ]),
+        ),
       ),
     );
   }
