@@ -59,13 +59,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  //Widget _content = MainMenu(stateHandle: _handleState);
+  Widget _content = MainMenu(stateHandle: () => this._handleState(_content));
 
-  //void _handleState(Widget content) {
-  //  setState(() {
-  //    _content = processAction(content);
-  //  });
-  //}
+  void _handleState(Widget content) {
+    setState(() {
+      _content = processAction(content);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

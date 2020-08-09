@@ -14,10 +14,12 @@ void wordsPressed(BuildContext context) {
 
 class MainMenu extends StatelessWidget {
 
- // final GestureTapCallback stateHandle;
- // MainMenu({@required this.stateHandle});
+  final State myHomePage;
+  final GestureTapCallback stateHandle;
 
-  MainMenu();
+  MainMenu({@required this.myHomePage, @required this.stateHandle});
+
+ // MainMenu();
 
   @override
   Widget build(BuildContext context) {
