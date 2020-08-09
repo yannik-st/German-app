@@ -2,12 +2,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'TextBox.dart';
 import 'MenuButton.dart';
+import 'MainMenu.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-void _something() {}
+Widget processAction(Widget content) {
+  return content;
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -56,18 +59,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  //Widget _content = MainMenu(stateHandle: _handleState);
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter += 2;
-    });
-  }
+  //void _handleState(Widget content) {
+  //  setState(() {
+  //    _content = processAction(content);
+  //  });
+  //}
 
   @override
   Widget build(BuildContext context) {
@@ -96,56 +94,12 @@ class _MyHomePageState extends State<MyHomePage> {
             style: TextStyle(fontWeight: FontWeight.w400, fontSize: 23),
           ),
           //backgroundColor: Color(0xB3FFFACD),
-            backgroundColor: Colors.white70,
+          backgroundColor: Colors.white70,
         ),
         body: Center(
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
-          child: Column(
-              // Column is also a layout widget. It takes a list of children and
-              // arranges them vertically. By default, it sizes itself to fit its
-              // children horizontally, and tries to be as tall as its parent.
-              //
-              // Invoke "debug painting" (press "p" in the console, choose the
-              // "Toggle Debug Paint" action from the Flutter Inspector in Android
-              // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-              // to see the wireframe for each widget.
-              //
-              // Column has various properties to control how it sizes itself and
-              // how it positions its children. Here we use mainAxisAlignment to
-              // center the children vertically; the main axis here is the vertical
-              // axis because Columns are vertical (the cross axis would be
-              // horizontal).
-              //mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Column(children: [
-                  Container(
-                    alignment: Alignment.center,
-                    margin:
-                        EdgeInsets.fromLTRB(0.0, 0.07 * maxHeight, 0.0, 0.0),
-                    child: MenuButton(onPressed: _something, text: 'Words'),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    margin:
-                        EdgeInsets.fromLTRB(0.0, 0.07 * maxHeight, 0.0, 0.0),
-                    child: MenuButton(onPressed: _something, text: 'Lecture'),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    margin:
-                        EdgeInsets.fromLTRB(0.0, 0.07 * maxHeight, 0.0, 0.0),
-                    child: MenuButton(onPressed: _something, text: 'Practice'),
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    margin:
-                        EdgeInsets.fromLTRB(0.0, 0.07 * maxHeight, 0.0, 0.0),
-                    child: MenuButton(onPressed: _something, text: 'Game'),
-                  ),
-                ]),
-              ]),
-        ),
+            // Center is a layout widget. It takes a single child and positions it
+            // in the middle of the parent.
+            child: MainMenu()),
       ),
     );
   }
