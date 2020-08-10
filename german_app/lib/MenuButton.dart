@@ -27,7 +27,7 @@ class MenuButton extends StatelessWidget {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 8.0, sigmaY: 8.0),
           child: RawMaterialButton(
-            splashColor: Colors.white70,
+            splashColor: Colors.white10,
             child: Text(
               text,
               style: TextStyle(fontSize: 35),

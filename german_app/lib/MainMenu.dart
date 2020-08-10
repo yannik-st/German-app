@@ -14,9 +14,6 @@ void wordsPressed(BuildContext context) {
 
 class MainMenu extends StatelessWidget {
 
- // final GestureTapCallback stateHandle;
- // MainMenu({@required this.stateHandle});
-
   MainMenu();
 
   @override
