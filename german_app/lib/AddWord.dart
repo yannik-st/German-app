@@ -51,6 +51,7 @@ class _AddWord extends State<AddWord> {
   TextEditingController _inputGerman = TextEditingController();
   TextEditingController _inputEnglish = TextEditingController();
   TextEditingController _inputAdditional = TextEditingController();
+  TextEditingController _inputPlural = TextEditingController();
   String _radioType = '';
   String _radioGender = '';
   String _radioCase = '';
@@ -119,7 +120,6 @@ class _AddWord extends State<AddWord> {
           Padding(padding: EdgeInsets.fromLTRB(0, 15, 0, 0)),
         ],
       );
-
     }
     else return Padding(
       padding: EdgeInsets.all(0.0),
@@ -186,11 +186,67 @@ class _AddWord extends State<AddWord> {
               ),
             ),
           ]),
+          Row(children: <Widget>[
+            Flexible(
+              flex: 1,
+              child: Row(
+                children: [
+                  Radio(
+                    groupValue: _radioCase,
+                    value: 'dative_accusative',
+                    onChanged: (val) {
+                      setState(() {
+                        _radioCase = val;
+                      });
+                    },
+                  ),
+                  Text('Dative & Accusative'),
+                ],
+              ),
+            ),
+            Flexible(
+              flex: 1,
+              child: Row(
+                children: [
+                  Radio(
+                    groupValue: _radioCase,
+                    value: 'none',
+                    onChanged: (val) {
+                      setState(() {
+                        _radioCase = val;
+                      });
+                    },
+                  ),
+                  Text('None'),
+                ],
+              ),
+            ),
+          ]),
           SepLine(),
           Padding(padding: EdgeInsets.fromLTRB(0, 15, 0, 0)),
         ],
       );
 
+    }
+    else return Padding(
+      padding: EdgeInsets.all(0.0),
+    );
+  }
+
+  Widget _pluralSection(type){
+    if(type == 'noun'){
+      return TextFormField(
+
+        controller: _inputPlural,
+        decoration: const InputDecoration(
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.horizontal(),
+            borderSide: BorderSide(width: 0, color: Colors.grey),
+          ),
+          contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+          hintText: '...German plural',
+        ),
+      );
     }
     else return Padding(
       padding: EdgeInsets.all(0.0),
@@ -213,6 +269,7 @@ class _AddWord extends State<AddWord> {
           children: <Widget>[ Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+//              Padding(padding: EdgeInsets.fromLTRB(0, 15, 0, 0)),
               Underline(
                 ' Type: ',
               ),
@@ -358,6 +415,7 @@ class _AddWord extends State<AddWord> {
                   return null;
                 },
               ),
+              _pluralSection(_radioType),
               TextFormField(
                 controller: _inputEnglish,
                 decoration: const InputDecoration(
@@ -390,7 +448,7 @@ class _AddWord extends State<AddWord> {
                     borderSide: BorderSide(width: 0, color: Colors.grey),
                   ),
                   contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                  hintText: '...additional information',
+                  hintText: '...Additional information',
                 )
               ),
               Text(_radioType),
@@ -407,7 +465,7 @@ class _AddWord extends State<AddWord> {
                       var newWord = Word(
                         id: 0,
                         german: _inputGerman.text,
-                        plural: '',                     // todo: XXX
+                        plural: _inputPlural.text,
                         english: _inputEnglish.text,
                         type: _radioType,
                         gender: _radioGender,

@@ -101,6 +101,52 @@ Future<List<Word>> words() async {
   });
 }
 
+Future<List<Word>> rawQuery(String query) async {
+  // Get a reference to the database.
+  final Database db = await database;
+
+  // Query the table for all The Words.
+  final List<Map<String, dynamic>> maps = await db.rawQuery(query);
+
+  // Convert the List<Map<String, dynamic> into a List<Word>.
+  return List.generate(maps.length, (i) {
+    return Word(
+        id: maps[i]['id'],
+        german: maps[i]['german'],
+        plural: maps[i]['plural'],
+        english: maps[i]['english'],
+        type: maps[i]['type'],
+        gender: maps[i]['gender'],
+        gcase: maps[i]['gcase'],
+        additional: maps[i]['additional'],
+        level: maps[i]['level']
+    );
+  });
+}
+
+Future<List<Word>> queryType(String type) async {
+  // Get a reference to the database.
+  final Database db = await database;
+
+  // Query the table for all The Words.
+  final List<Map<String, dynamic>> maps = await db.rawQuery('SELECT "english" FROM "words"');
+
+  // Convert the List<Map<String, dynamic> into a List<Word>.
+  return List.generate(maps.length, (i) {
+    return Word(
+        id: maps[i]['id'],
+        german: maps[i]['german'],
+        plural: maps[i]['plural'],
+        english: maps[i]['english'],
+        type: maps[i]['type'],
+        gender: maps[i]['gender'],
+        gcase: maps[i]['gcase'],
+        additional: maps[i]['additional'],
+        level: maps[i]['level']
+    );
+  });
+}
+
 Future<void> updateWord(Word word) async {
   // Get a reference to the database.
   final db = await database;
