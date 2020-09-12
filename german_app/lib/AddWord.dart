@@ -38,6 +38,28 @@ void _something() {}
 //  print(await words());
 //
 //}
+//
+//showDialog(context: context, builder: (BuildContext context) {
+//return AlertDialog(
+//title: Text(newWord.german),
+//content: Text(
+//'german: '+ _inputGerman.text +'\n'+
+//'plural: '+_inputPlural.text +'\n'+
+//'english: '+_inputEnglish.text +'\n'+
+//'type: '+_radioType +'\n'+
+//'gender: '+_radioGender +'\n'+
+//'gcase: '_radioCase +'\n'+
+//'additional:'+_inputAdditional.text),
+//actions: <Widget>[
+//FlatButton(
+//child: Text('Ok'),
+//onPressed: () {
+//Navigator.of(context).pop();
+//},
+//),
+//],
+//);
+//},);
 
 class AddWord extends StatefulWidget {
   AddWord({Key key}) : super(key: key);
@@ -55,6 +77,31 @@ class _AddWord extends State<AddWord> {
   String _radioType = '';
   String _radioGender = '';
   String _radioCase = '';
+
+  displayWord(Word newWord){
+    showDialog(context: context, builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(newWord.german),
+        content: Text('german: '+ newWord.german),
+        actions: <Widget>[
+          Row( children: [
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              child: Text('Delete'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ]),
+        ],
+      );
+    },);
+  }
 
   Widget _genderSection(type) {
     if(type == 'noun'){
@@ -474,8 +521,10 @@ class _AddWord extends State<AddWord> {
                         level: 0
                       );
 
+                      displayWord(newWord);
+
                       // Insert a word into the database.
-                      await insertWord(newWord);
+//                      await insertWord(newWord);
                     }
                   },
                   child: Text('Submit'),

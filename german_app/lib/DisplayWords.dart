@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:german_app/Underline.dart';
 import 'db_words.dart';
+import 'DisplayedWord.dart';
 
 Future<List<Word>> _something() async {
   final List<Word> wordList = await rawQuery('SELECT * FROM words');
@@ -28,7 +29,7 @@ Widget wordListWidget() {
         itemCount: content.data.length,
         itemBuilder: (context, index) {
           Word word = content.data[index];
-          return Underline(word.german + ': ' + word.english);
+          return DisplayedWord(word: word);
         },
       );
     },

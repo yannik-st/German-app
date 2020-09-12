@@ -12,45 +12,6 @@ void _something() async {
       'SELECT * FROM words WHERE type="noun" AND gender="feminine"'));
 }
 
-void _displayWordsPressed(BuildContext context) {
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => DisplayWords()),
-  );
-}
-
-//Future<void> _something() async {
-//  var fido = Word(
-//    german: 0,
-//    english: 'Fido',
-//    gender: 35,
-//  );
-//
-//  // Insert a word into the database.
-//  await insertWord(fido);
-//
-//  // Print the list of words (only Fido for now).
-//  print(await words());
-//
-//  // Update Fido's age and save it to the database.
-//  fido = Word(
-//  german: fido.german,
-//  english: fido.english,
-//  gender: fido.gender + 7,
-//  );
-//  await updateWord(fido);
-//
-//  // Print Fido's updated information.
-//  print(await words());
-//
-//  // Delete Fido from the database.
-//  await deleteWord(fido.german);
-//
-//  // Print the list of words (empty).
-//  print(await words());
-//
-//}
-
 class ShowWords extends StatefulWidget {
   ShowWords({Key key}) : super(key: key);
 
