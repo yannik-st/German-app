@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
 import 'package:german_app/SepLine.dart';
 import 'NormalButton.dart';
@@ -24,15 +25,16 @@ class _ShowWords extends State<ShowWords> {
   TextEditingController _inputN = TextEditingController(text: '15');
   String _radioType = 'any';
   String _radioHide = 'none';
-
+  double _amount = 10;
   void _displayWordsPressed() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => DisplayWords()),
+      MaterialPageRoute(builder: (context) => DisplayWords(amount: _amount,hide: _radioHide)),
     );
   }
 
   Widget _configSection() {
+
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
       Flexible(
         flex: 3,
@@ -157,38 +159,36 @@ class _ShowWords extends State<ShowWords> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
-                      child: Text(
-                        ' Amount:  ',
-                        style: TextStyle(fontSize: 18),
-                      ),
-                    ),
-                    Container(
-                      width: 65,
-                      child: TextField(
-                        controller: _inputN,
-                        decoration: const InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.horizontal(),
-                            borderSide:
-                                BorderSide(width: 0, color: Colors.grey),
-                          ),
-                          contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          ' Amount:  $_amount',
+                          style: TextStyle(fontSize: 18),
                         ),
-                      ),
-                    )
-                  ],
+                        Container(
+                          width: 4.5/8 * MediaQuery.of(context).size.width,
+                          //alignment: Alignment.centerLeft,
+                          child: Slider(
+                            value: _amount,
+                            min: 5,
+                            max: 50,
+                            divisions: 9,
+                            onChanged: (val) {
+                              setState(() {
+                                _amount = val;
+                              });
+                            },
+                          ),
+                        ),
+                      ]),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
                 ),
-                Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
                   Padding(
                     padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
                     child: Text(

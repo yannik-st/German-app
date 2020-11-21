@@ -87,7 +87,8 @@ class _AddWord extends State<AddWord> {
           Row( children: [
             FlatButton(
               child: Text('Ok'),
-              onPressed: () {
+              onPressed: () async {
+                await insertWord(newWord);
                 Navigator.of(context).pop();
               },
             ),
@@ -506,6 +507,7 @@ class _AddWord extends State<AddWord> {
                 padding: EdgeInsets.fromLTRB(10, 16, 0, 0),
                 child: RaisedButton(
                   onPressed: () async {
+
                     // Validate will return true if the form is valid, or false if
                     // the form is invalid.
                     if (_formKey.currentState.validate()) {
