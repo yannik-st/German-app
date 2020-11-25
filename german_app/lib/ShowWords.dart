@@ -7,6 +7,8 @@ import 'NormalButton.dart';
 import 'db_words.dart';
 import 'Underline.dart';
 import 'DisplayWords.dart';
+import 'DisplayConfig.dart';
+import 'AmountSlider.dart';
 
 void _something() async {
   print(await rawQuery(
@@ -22,19 +24,17 @@ class ShowWords extends StatefulWidget {
 
 class _ShowWords extends State<ShowWords> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _inputN = TextEditingController(text: '15');
   String _radioType = 'any';
   String _radioHide = 'none';
-  double _amount = 10;
-  void _displayWordsPressed() {
+
+  void _displayWordsPressed(amount) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => DisplayWords(amount: _amount,hide: _radioHide)),
+      MaterialPageRoute(builder: (context) => DisplayWords(_radioHide, amount)),
     );
   }
 
   Widget _configSection() {
-
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
       Flexible(
         flex: 3,
@@ -161,29 +161,7 @@ class _ShowWords extends State<ShowWords> {
               children: [
                 Padding(
                   padding: EdgeInsets.fromLTRB(10, 10, 0, 0),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          ' Amount:  $_amount',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        Container(
-                          width: 4.5/8 * MediaQuery.of(context).size.width,
-                          //alignment: Alignment.centerLeft,
-                          child: Slider(
-                            value: _amount,
-                            min: 5,
-                            max: 50,
-                            divisions: 9,
-                            onChanged: (val) {
-                              setState(() {
-                                _amount = val;
-                              });
-                            },
-                          ),
-                        ),
-                      ]),
+                  child: AmountSlider(),
                 ),
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
@@ -263,45 +241,51 @@ class _ShowWords extends State<ShowWords> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Display Words',
-          style: TextStyle(fontWeight: FontWeight.w400, fontSize: 23),
-        ),
-        backgroundColor: Colors.white70,
-      ),
-      body: Form(
-        key: _formKey,
-        child: ListView(children: <Widget>[
-          Underline(' Configure: '),
-          Padding(
-            padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+    return ChangeNotifierProvider(
+      create: (BuildContext context) => DisplayConfig(),
+      builder: (context, gel) {
+        final stateProvider = Provider.of<DisplayConfig>(context);
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text(
+              'Display Words',
+              style: TextStyle(fontWeight: FontWeight.w400, fontSize: 23),
+            ),
+            backgroundColor: Colors.white70,
           ),
-          Column(
-            //crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              _configSection(),
+          body: Form(
+            key: _formKey,
+            child: ListView(children: <Widget>[
+              Underline(' Configure: '),
               Padding(
-                padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
-                child: Container(
-                  width: 0.5 * MediaQuery.of(context).size.width,
-                  height: 0.08 * MediaQuery.of(context).size.height,
-                  child: MaterialButton(
-                    onPressed: _displayWordsPressed,
-                    splashColor: Colors.grey,
-                    color: Colors.white30,
-                    child: Text(
-                      'Display',
-                      style: TextStyle(fontSize: 24),
+                padding: EdgeInsets.fromLTRB(0, 15, 0, 0),
+              ),
+              Column(
+                //crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  _configSection(),
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
+                    child: Container(
+                      width: 0.5 * MediaQuery.of(context).size.width,
+                      height: 0.08 * MediaQuery.of(context).size.height,
+                      child: MaterialButton(
+                        onPressed: () => _displayWordsPressed(stateProvider.amount),
+                        splashColor: Colors.grey,
+                        color: Colors.white30,
+                        child: Text(
+                          'Display',
+                          style: TextStyle(fontSize: 24),
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
+            ]),
           ),
-        ]),
-      ),
+        );
+      }
     );
   }
 }
