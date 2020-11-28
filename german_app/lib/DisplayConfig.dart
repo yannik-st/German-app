@@ -2,18 +2,18 @@ import 'package:flutter/foundation.dart';
 import 'db_words.dart';
 
 class DisplayConfig with ChangeNotifier{
-  String _hidden = 'none';
+  String _hiddenDisplay = 'none';
   double _amount = 15;
   String _type = 'any';
   // Word _word;
 
-  String get hidden => _hidden;
+  String get hiddenDisplay => _hiddenDisplay;
   double get amount => _amount;
   String get type => _type;
   // Word get word => _word;
 
-  set hidden(String newVal) {
-    _hidden = newVal;
+  set hiddenDisplay(String newVal) {
+    _hiddenDisplay = newVal;
     notifyListeners();
   }
   set amount(double newVal) {

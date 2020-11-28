@@ -25,16 +25,16 @@ class ShowWords extends StatefulWidget {
 class _ShowWords extends State<ShowWords> {
   final _formKey = GlobalKey<FormState>();
   String _radioType = 'any';
-  String _radioHide = 'none';
+  // String _radioHide = 'none';
 
-  void _displayWordsPressed(amount) {
+  void _displayWordsPressed(amount, hideDisplay) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => DisplayWords(_radioHide, amount)),
+      MaterialPageRoute(builder: (context) => DisplayWords(hideDisplay, amount)),
     );
   }
 
-  Widget _configSection() {
+  Widget _configSection(stateProvider) {
     return Row(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
       Flexible(
         flex: 3,
@@ -180,13 +180,9 @@ class _ShowWords extends State<ShowWords> {
                       Row(
                         children: [
                           Radio(
-                            groupValue: _radioHide,
+                            groupValue: stateProvider.hiddenDisplay,
                             value: 'none',
-                            onChanged: (val) {
-                              setState(() {
-                                _radioHide = val;
-                              });
-                            },
+                            onChanged: (value) => stateProvider.hiddenDisplay = value,
                           ),
                           Text(
                             'none',
@@ -197,13 +193,9 @@ class _ShowWords extends State<ShowWords> {
                       Row(
                         children: [
                           Radio(
-                            groupValue: _radioHide,
+                            groupValue: stateProvider.hiddenDisplay,
                             value: 'german',
-                            onChanged: (val) {
-                              setState(() {
-                                _radioHide = val;
-                              });
-                            },
+                            onChanged: (value) => stateProvider.hiddenDisplay = value,
                           ),
                           Text(
                             'german',
@@ -214,13 +206,9 @@ class _ShowWords extends State<ShowWords> {
                       Row(
                         children: [
                           Radio(
-                            groupValue: _radioHide,
+                            groupValue: stateProvider.hiddenDisplay,
                             value: 'english',
-                            onChanged: (val) {
-                              setState(() {
-                                _radioHide = val;
-                              });
-                            },
+                            onChanged: (value) => stateProvider.hiddenDisplay = value,
                           ),
                           Text(
                             'english',
@@ -263,14 +251,14 @@ class _ShowWords extends State<ShowWords> {
               Column(
                 //crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  _configSection(),
+                  _configSection(stateProvider),
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 16, 0, 0),
                     child: Container(
                       width: 0.5 * MediaQuery.of(context).size.width,
                       height: 0.08 * MediaQuery.of(context).size.height,
                       child: MaterialButton(
-                        onPressed: () => _displayWordsPressed(stateProvider.amount),
+                        onPressed: () => _displayWordsPressed(stateProvider.amount, stateProvider.hiddenDisplay),
                         splashColor: Colors.grey,
                         color: Colors.white30,
                         child: Text(
