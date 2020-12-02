@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'db_words.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 class DisplayedWord extends StatefulWidget {
   final Word word;
@@ -16,10 +17,29 @@ class DisplayedWord extends StatefulWidget {
 class _DisplayedWord extends State<DisplayedWord> {
   final Word word;
   String hidden;
+  final FlutterTts flutterTts = FlutterTts();
 
-  _DisplayedWord(this.word, this.hidden);
+  _DisplayedWord(this.word, this.hidden) {
+    flutterTts.setLanguage('de-DE');
+  }
 
   bool _learned = false;
+
+  Future speak() async{
+    String article = '';
+    if(word.type == 'noun'){
+      if (word.gender == 'masculine') {
+        article = 'der ';
+      } else if (word.gender == 'feminine') {
+        article = 'die ';
+      } else if (word.gender == 'neuter') {
+        article = 'das ';
+      }
+
+    }
+    print(await flutterTts.getLanguages);
+    await flutterTts.speak(article+word.german);
+  }
 
   String article(String gender) {
     String retString = '';
@@ -33,7 +53,7 @@ class _DisplayedWord extends State<DisplayedWord> {
     return retString;
   }
 
-  Widget germanSection(Word word) {
+  Widget germanSection() {
     bool hasSecondLine = true;
     Widget _secondLine = Text('');
     Widget _box = Container();
@@ -125,19 +145,17 @@ class _DisplayedWord extends State<DisplayedWord> {
       child: Row(children: [
         Flexible(
           flex: 1,
-          child: Checkbox(
-            value: _learned,
-            onChanged: (val) {
-              setState(() {
-                _learned = !_learned;
-              });
-            },
+          child: Container(
+            child: MaterialButton(
+              child: Icon(Icons.volume_up, color: Colors.black45,),
+              onPressed: () => speak(),
+            ),
           ),
         ),
         Flexible(
           flex: 4,
           fit: FlexFit.tight,
-          child: germanSection(word),
+          child: germanSection(),
         ),
         Flexible(
           flex: 3,

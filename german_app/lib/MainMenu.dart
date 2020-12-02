@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:german_app/Words.dart';
+import 'Lectures/L1.dart';
 import 'Underline.dart';
 import 'MenuButton.dart';
 
@@ -9,6 +10,13 @@ void wordsPressed(BuildContext context) {
   Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => Words()),
+  );
+}
+
+void lecturePressed(BuildContext context) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => L1P1()),
   );
 }
 
@@ -38,7 +46,7 @@ class MainMenu extends StatelessWidget {
                   .of(context)
                   .size
                   .height, 0.0, 0.0),
-              child: MenuButton(onPressed: null, text: 'Lecture'),
+              child: MenuButton(onPressed: () => lecturePressed(context), text: 'Lecture'),
             ),
             Container(
               alignment: Alignment.center,
