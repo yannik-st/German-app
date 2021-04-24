@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:german_app/Words.dart';
-import 'Lectures/L1.dart';
 import 'Underline.dart';
 import 'MenuButton.dart';
+import 'Package:german_app/Lectures/LectureMenu.dart';
 
 
 void wordsPressed(BuildContext context) {
@@ -16,7 +16,7 @@ void wordsPressed(BuildContext context) {
 void lecturePressed(BuildContext context) {
   Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => L1P1()),
+    MaterialPageRoute(builder: (context) => LectureMenu()),
   );
 }
 

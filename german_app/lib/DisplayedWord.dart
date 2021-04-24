@@ -7,21 +7,20 @@ import 'package:flutter_tts/flutter_tts.dart';
 class DisplayedWord extends StatefulWidget {
   final Word word;
   final hidden;
+  final flutterTts;
 
-  DisplayedWord({Key key, @required this.word, this.hidden}) : super(key: key);
+  DisplayedWord({Key key, @required this.word, this.hidden,this.flutterTts}) : super(key: key);
 
   @override
-  _DisplayedWord createState() => _DisplayedWord(word, hidden);
+  _DisplayedWord createState() => _DisplayedWord(word, hidden, flutterTts);
 }
 
 class _DisplayedWord extends State<DisplayedWord> {
   final Word word;
   String hidden;
-  final FlutterTts flutterTts = FlutterTts();
+  final FlutterTts flutterTts;
 
-  _DisplayedWord(this.word, this.hidden) {
-    flutterTts.setLanguage('de-DE');
-  }
+  _DisplayedWord(this.word, this.hidden, this.flutterTts);
 
   bool _learned = false;
 
@@ -37,7 +36,7 @@ class _DisplayedWord extends State<DisplayedWord> {
       }
 
     }
-    print(await flutterTts.getLanguages);
+    // print(await flutterTts.getLanguages);
     await flutterTts.speak(article+word.german);
   }
 

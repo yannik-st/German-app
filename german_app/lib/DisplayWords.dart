@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'DisplayConfig.dart';
 import 'db_words.dart';
 import 'DisplayedWord.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 Future<List<Word>> _something(amount) async {
   final List<Word> wordList = await rawQuery('SELECT * FROM words');
@@ -22,7 +23,7 @@ Future<List<Word>> _something(amount) async {
   }
 }
 
-Widget wordListWidget(hide, amount) {
+Widget wordListWidget(hide, amount, flutterTts) {
   return FutureBuilder(
     builder: (context, content) {
       if (content.connectionState == ConnectionState.none ||
@@ -36,6 +37,7 @@ Widget wordListWidget(hide, amount) {
             return DisplayedWord(
               word: word,
               hidden: hide, // todo: ...
+              flutterTts: flutterTts,
             );
           },
         );
@@ -48,8 +50,11 @@ Widget wordListWidget(hide, amount) {
 class DisplayWords extends StatelessWidget {
   final String hide;
   final double amount;
+  final FlutterTts flutterTts = FlutterTts();
 
-  DisplayWords(this.hide, this.amount);
+  DisplayWords(this.hide, this.amount) {
+    flutterTts.setLanguage('de-DE');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +68,7 @@ class DisplayWords extends StatelessWidget {
           ),
           backgroundColor: Colors.white70,
         ),
-        body: wordListWidget(hide, amount),
+        body: wordListWidget(hide, amount, flutterTts),
       ),
     );
   }
