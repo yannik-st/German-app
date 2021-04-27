@@ -8,14 +8,14 @@ import 'package:german_app/Lectures/L2/L2.dart' as L2;
 void _lecture1Pressed(BuildContext context) {
   Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => LectureManager(pages: L1.pages)),
+    MaterialPageRoute(builder: (context) => LectureManager(pages: L1.pages, lectureNumber: '1',)),
   );
 }
 
 void _lecture2Pressed(BuildContext context) {
   Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => LectureManager(pages: L2.pages)),
+    MaterialPageRoute(builder: (context) => LectureManager(pages: L2.pages, lectureNumber: '2',)),
   );
 }
 

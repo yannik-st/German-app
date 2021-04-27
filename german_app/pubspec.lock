@@ -120,7 +120,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.3.2+2"
+    version: "4.3.3"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -146,7 +146,7 @@ packages:
       name: sqflite_common
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2+1"
+    version: "1.0.3+3"
   stack_trace:
     dependency: transitive
     description:

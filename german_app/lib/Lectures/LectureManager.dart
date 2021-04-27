@@ -7,8 +7,9 @@ import 'dart:math';
 
 class LectureManager extends StatefulWidget {
   final List pages; // pages is a list filled with the respective lecture pages
+  final String lectureNumber;
 
-  LectureManager({Key key, @required this.pages}) : super(key: key);
+  LectureManager({Key key, @required this.pages, @required this.lectureNumber}) : super(key: key);
 
   @override
   _LectureManager createState() => _LectureManager();
@@ -16,6 +17,7 @@ class LectureManager extends StatefulWidget {
 
 class _LectureManager extends State<LectureManager> {
   List pages;
+  String lectureNumber;
 
   int _selectedIndex = 0;
 
@@ -25,6 +27,7 @@ class _LectureManager extends State<LectureManager> {
   void initState(){
     super.initState();
     pages = widget.pages;
+    lectureNumber = widget.lectureNumber;
   }
 
   void _onItemTapped(int index) {
@@ -49,8 +52,8 @@ class _LectureManager extends State<LectureManager> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Lecture 1',
+        title: Text(
+          'Lecture ' + lectureNumber,
           style: TextStyle(fontWeight: FontWeight.w400, fontSize: 23),
         ),
         backgroundColor: Colors.white70,

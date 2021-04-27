@@ -7,7 +7,7 @@ import 'db_words.dart';
 import 'DisplayedWord.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
-Future<List<Word>> _something(amount) async {
+Future<List<Word>> _acquireWords(amount) async {
   final List<Word> wordList = await rawQuery('SELECT * FROM words');
   wordList.shuffle();
   List<Word> filteredList = [];
@@ -43,7 +43,7 @@ Widget wordListWidget(hide, amount, flutterTts) {
         );
       }
     },
-    future: _something(amount),
+    future: _acquireWords(amount),
   );
 }
 
