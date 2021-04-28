@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:german_app/NormalButton.dart';
+import '../LectureButton.dart';
 import 'LectureManager.dart';
 import 'package:german_app/Lectures/L1/L1.dart' as L1;
 import 'package:german_app/Lectures/L2/L2.dart' as L2;
@@ -36,22 +37,16 @@ class LectureMenu extends StatelessWidget {
         backgroundColor: Colors.white70,
       ),
       body: ListView(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.fromLTRB(8, 16, 8, 8),
         children: <Widget>[
-          NormalButton(onPressed: () => _lecture1Pressed(context), text: 'Lecture 1', icon: IconData(59816, fontFamily: 'MaterialIcons')),
-          NormalButton(onPressed: () => _lecture2Pressed(context), text: 'Lecture 2', icon: IconData(59816, fontFamily: 'MaterialIcons')),
-          NormalButton(onPressed: () => _something, text: 'Lecture 3', icon: IconData(59816, fontFamily: 'MaterialIcons')),
-          NormalButton(onPressed: () => _something, text: 'Lecture 4', icon: IconData(59816, fontFamily: 'MaterialIcons')),
-          NormalButton(onPressed: () => _something, text: 'Lecture 5', icon: IconData(59816, fontFamily: 'MaterialIcons')),
-          NormalButton(onPressed: () => _something, text: 'Lecture 6', icon: IconData(59816, fontFamily: 'MaterialIcons')),
-          NormalButton(onPressed: () => _something, text: 'Lecture 7', icon: IconData(59816, fontFamily: 'MaterialIcons')),
-          NormalButton(onPressed: () => _something, text: 'Lecture 8', icon: IconData(59816, fontFamily: 'MaterialIcons')),
-          NormalButton(onPressed: () => _something, text: 'Lecture 9', icon: IconData(59816, fontFamily: 'MaterialIcons')),
-          NormalButton(onPressed: () => _something, text: 'Lecture 10', icon: IconData(59816, fontFamily: 'MaterialIcons')),
-          NormalButton(onPressed: () => _something, text: 'Lecture 11', icon: IconData(59816, fontFamily: 'MaterialIcons')),
-          NormalButton(onPressed: () => _something, text: 'Lecture 12', icon: IconData(59816, fontFamily: 'MaterialIcons')),
-          NormalButton(onPressed: () => _something, text: 'Lecture 13', icon: IconData(59816, fontFamily: 'MaterialIcons')),
-          NormalButton(onPressed: () => _something, text: 'Lecture 14', icon: IconData(59816, fontFamily: 'MaterialIcons')),
+          LectureButton(onPressed: () => _lecture1Pressed(context), title: 'Lecture 1', text: 'nouns - article, plural'),
+          LectureButton(onPressed: () => _lecture2Pressed(context), title: 'Lecture 2', text: 'something'),
+          LectureButton(onPressed: () => _something, title: 'Lecture 3', text: 'something'),
+          LectureButton(onPressed: () => _something, title: 'Lecture 4', text: 'something'),
+          LectureButton(onPressed: () => _something, title: 'Lecture 5', text: 'something'),
+          LectureButton(onPressed: () => _something, title: 'Lecture 6', text: 'something'),
+          LectureButton(onPressed: () => _something, title: 'Lecture 7', text: 'something'),
+          LectureButton(onPressed: () => _something, title: 'Lecture 8', text: 'something'),
         ],
       ),
     );

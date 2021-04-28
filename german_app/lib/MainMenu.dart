@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:german_app/Words.dart';
+import 'DeckMenu.dart';
 import 'Underline.dart';
 import 'MenuButton.dart';
 import 'Package:german_app/Lectures/LectureMenu.dart';
@@ -10,6 +11,13 @@ void wordsPressed(BuildContext context) {
   Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => Words()),
+  );
+}
+
+void decksPressed(BuildContext context) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => DeckMenu()),
   );
 }
 
@@ -37,7 +45,7 @@ class MainMenu extends StatelessWidget {
                   .of(context)
                   .size
                   .height, 0.0, 0.0),
-              child: MenuButton(onPressed: () => wordsPressed(context), text: 'Words'),
+              child: MenuButton(onPressed: () => decksPressed(context), text: 'Decks'),
             ),
             Container(
               alignment: Alignment.center,
