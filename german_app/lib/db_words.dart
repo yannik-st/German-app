@@ -6,6 +6,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class Word{
+  final String deck;
   final int id;
   final String german;
   final String plural;
@@ -16,10 +17,11 @@ class Word{
   final String additional;
   final int level;
 
-  Word({this.id, this.german, this.plural, this.english, this.type, this.gender, this.gcase, this.additional, this.level});
+  Word({this.deck, this.id, this.german, this.plural, this.english, this.type, this.gender, this.gcase, this.additional, this.level});
 
   Map<String, dynamic> toMap() {
     return {
+      'deck': deck,
       'id': id,
       'german': german,
       'plural': plural,
@@ -36,7 +38,7 @@ class Word{
   // each word when using the print statement.
   @override
   String toString() {
-    return 'Word{id: $id, german: $german, english: $english, type: $type, gender: $gender, gcase: $gcase, additional: $additional, level: $level}';
+    return 'Word{deck $deck, id: $id, german: $german, english: $english, type: $type, gender: $gender, gcase: $gcase, additional: $additional, level: $level}';
   }
 }
 
@@ -52,7 +54,7 @@ initDB() async {
     // When the database is first created, create a table to store words.
     onCreate: (db, version) {
       return db.execute(
-        "CREATE TABLE words(id INTEGER, german TEXT PRIMARY KEY, plural TEXT, english TEXT, type TEXT, gender TEXT, gcase TEXT, additional TEXT, level INTEGER)", //todo: "PRIMARY KEY" for id only makes sense if we also use it for searching!! XXX
+        "CREATE TABLE words(deck TEXT, id INTEGER, german TEXT PRIMARY KEY, plural TEXT, english TEXT, type TEXT, gender TEXT, gcase TEXT, additional TEXT, level INTEGER)", //todo: "PRIMARY KEY" for id only makes sense if we also use it for searching!! XXX
       );
     },
     // Set the version. This executes the onCreate function and provides a
