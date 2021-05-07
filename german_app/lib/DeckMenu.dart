@@ -1,8 +1,43 @@
 import 'package:flutter/material.dart';
 import 'db_words.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:german_app/BottomSheetList.dart';
 
+_something1(){
+  print('firstButton');
+}
 
+_something2(){
+  print('secondButton');
+}
+
+// returns the next empty key in keyList
+String _getDeckKey(List<String> keyList){
+  String newKey = '';
+
+  for (var i=0; i<keyList.length; i++){
+    String checkKey = 'deck'+i.toString();
+    bool containsCheckKey = false;
+
+    for (var i=0; i<keyList.length; i++){
+      if (checkKey == keyList.elementAt(i)){
+        containsCheckKey = true;
+      }
+    }
+    if (containsCheckKey==false){
+      newKey = checkKey;
+      break;
+    }
+    else{
+      print(checkKey + ' existed already');
+    }
+  }
+  if (newKey == ''){
+    newKey = 'deck'+keyList.length.toString();
+  }
+
+  return newKey;
+}
 
 class DeckMenu extends StatefulWidget {
   DeckMenu();
@@ -12,12 +47,14 @@ class DeckMenu extends StatefulWidget {
 }
 
 class _DeckMenu extends State<DeckMenu> {
+  List<String> bottomSheetOptions = ['Rename', 'Delete'];
+  
   _DeckMenu();
 
-  deckPressed(String deck) {
-    print(deck);
+  deckPressed(String name, String key) {
+    print('Name: '+ name + '   Key: ' + key);
   }
-
+  
   _deletePressedDialog(context, deleteDeck) {
     showDialog(
       context: context,
@@ -31,10 +68,21 @@ class _DeckMenu extends State<DeckMenu> {
                 onPressed: () async {
                   // XXX todo: FIRST WE HAVE TO DELETE ALL WORDS IN THE DB WITH deck==deletedDeck otherwise they will be there for ever
                   SharedPreferences prefs = await SharedPreferences.getInstance();
-                  List<String> list = prefs.getStringList('decks');
-                  list.remove(deleteDeck);
-                  prefs.setStringList('decks', list);
+                  List<String> names = prefs.getStringList('deckNames');
+                  List<String> keys = prefs.getStringList('deckKeys');
+                  int delete_index = 100;
+                  for (var i=0; i<names.length; i++){
+                    if (deleteDeck == names.elementAt(i)){
+                      delete_index = i;
+                    }
+                  }
+                  names.remove(deleteDeck);
+                  print('removing key: '+keys.elementAt(delete_index));
+                  keys.removeAt(delete_index);
+                  prefs.setStringList('deckNames', names);
+                  prefs.setStringList('deckKeys', keys);
                   print('deleted: ' + deleteDeck);
+                  Navigator.of(context).pop();
                   Navigator.of(context).pop();
                   setState(() {
                   });
@@ -99,35 +147,52 @@ class _DeckMenu extends State<DeckMenu> {
     );
   }
 
-  _addPref(String newDeck) async {
+  _addPref(String newDeckName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> list = prefs.getStringList('decks');
+    List<String> names_list = prefs.getStringList('deckNames');
+    List<String> keys_list = prefs.getStringList('deckKeys');
     bool existsAlready = false;
-    for (var i = 0; i < list.length; i++) {
-      if (newDeck == list.elementAt(i)) {
+    for (var i = 0; i < names_list.length; i++) {
+      if (newDeckName == names_list.elementAt(i)) {
         existsAlready = true;
       }
     }
     if (existsAlready == false) {
-      list.add(newDeck);
+      names_list.add(newDeckName);
+      String newKey = _getDeckKey(keys_list);
+      keys_list.add(newKey);
+      prefs.setStringList('deckNames', names_list);
+      prefs.setStringList('deckKeys', keys_list);
+      print('added ' + newDeckName + 'with key: ' + newKey);
     } else {
       print("exists already, ain't adding shit");
     }
-    prefs.setStringList('decks', list);
-    print('added ' + newDeck);
   }
 
-  Future<List<String>> _loadDecks() async {
+  Future<List<List<String>>> _loadDecks() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     // if there is no list yet, we initialize it with the lecture deck
-    if (prefs.getStringList('decks') == null) {
-      List<String> list = ['Lecture'];
-      prefs.setStringList('decks', list);
+    if (prefs.getStringList('deckNames') == null || prefs.getStringList('deckNames').isEmpty) {
+      List<String> listDeckNames = ['Lecture'];
+      List<String> listDeckKeys = ['deck0'];
+      prefs.setStringList('deckNames', listDeckNames);
+      prefs.setStringList('deckKeys', listDeckKeys);
       print('first_time');
     }
-    List<String> deck_list = prefs.getStringList('decks');
+    List<String> names_list = prefs.getStringList('deckNames');
+    List<String> keys_list = prefs.getStringList('deckKeys');
 
-    return deck_list;
+    print('names:');
+    for(var i=0; i<names_list.length; i++){
+      print(names_list.elementAt(i));
+    }
+    print('keys:');
+    for(var i=0; i<keys_list.length; i++){
+      print(keys_list.elementAt(i));
+    }
+
+    return [names_list, keys_list];
   }
 
 
@@ -149,28 +214,36 @@ class _DeckMenu extends State<DeckMenu> {
                 content.hasData == false) {
               return Container();
             } else {
+              List<String> deckNames = content.data.elementAt(0);
+              List<String> deckKeys = content.data.elementAt(1);
               return GridView.builder(
                   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: 200,
                       childAspectRatio: 3 / 2,
                       crossAxisSpacing: 16,
                       mainAxisSpacing: 16),
-                  itemCount: content.data.length,
+                  itemCount: deckNames.length,
                   itemBuilder: (BuildContext ctx, index) {
                     return Card(
                       color: Colors.deepPurple,
                       child: InkWell(
                         splashColor: Colors.white,
                         onTap: () {
-                          deckPressed(content.data.elementAt(index));
+                          deckPressed(deckNames.elementAt(index), deckKeys.elementAt(index));
                         },
                         onLongPress: () {
-                          _deletePressedDialog(
-                              context, content.data.elementAt(index));
+                          showModalBottomSheet(
+                              context: context,
+                              builder: (context) {
+                                return BottomSheetList(
+                                  optionsList: bottomSheetOptions,
+                                  onPressedList: [() => {}, () => _deletePressedDialog(context, deckNames.elementAt(index))],
+                                );
+                              }
+                          );
                         },
-                        // XXX todo: hier soll zuerst so ein kleines fenster aufpopped mit "delete" !!
                         child: Center(
-                          child: Text(content.data.elementAt(index),
+                          child: Text(deckNames.elementAt(index),
                               style: TextStyle(
                                   fontSize: 25,
                                   fontWeight: FontWeight.bold,
