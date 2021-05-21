@@ -1,0 +1,6 @@
+TO DO:
+
+- Visualize in which deck we are after pressing some deck.. (in the "words" menu and so on)
+
+
+- come up with infrastrukture to change db entries - some time I'll need it

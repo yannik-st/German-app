@@ -2,13 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:german_app/Underline.dart';
 import 'package:provider/provider.dart';
+import 'package:sqflite/sqflite.dart';
 import 'DisplayConfig.dart';
 import 'db_words.dart';
 import 'DisplayedWord.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
-Future<List<Word>> _acquireWords(amount) async {
-  final List<Word> wordList = await rawQuery('SELECT * FROM words');
+// Future<void> deleteDatabase(String path) =>  # dangerous stuff
+//     databaseFactory.deleteDatabase(path);
+
+Future<List<Word>> _acquireWords(amount, deck_key) async {
+  final List<Word> wordList = await rawQuery('SELECT * FROM words WHERE deck="$deck_key"');  // todo: WHERE deck=deck_key or so...
+  print('somewhere, deep in space, there is a '+ deck_key);
   wordList.shuffle();
   List<Word> filteredList = [];
   amount = amount.toInt();
@@ -23,7 +28,7 @@ Future<List<Word>> _acquireWords(amount) async {
   }
 }
 
-Widget wordListWidget(hide, amount, flutterTts) {
+Widget wordListWidget(hide, amount, flutterTts, deck) {
   return FutureBuilder(
     builder: (context, content) {
       if (content.connectionState == ConnectionState.none ||
@@ -43,7 +48,7 @@ Widget wordListWidget(hide, amount, flutterTts) {
         );
       }
     },
-    future: _acquireWords(amount),
+    future: _acquireWords(amount, deck),
   );
 }
 
@@ -51,8 +56,9 @@ class DisplayWords extends StatelessWidget {
   final String hide;
   final double amount;
   final FlutterTts flutterTts = FlutterTts();
+  final String deck;
 
-  DisplayWords(this.hide, this.amount) {
+  DisplayWords(this.hide, this.amount, this.deck) {
     flutterTts.setLanguage('de-DE');
   }
 
@@ -68,7 +74,7 @@ class DisplayWords extends StatelessWidget {
           ),
           backgroundColor: Colors.white70,
         ),
-        body: wordListWidget(hide, amount, flutterTts),
+        body: wordListWidget(hide, amount, flutterTts, deck),
       ),
     );
   }

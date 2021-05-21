@@ -54,13 +54,14 @@ initDB() async {
     // When the database is first created, create a table to store words.
     onCreate: (db, version) {
       return db.execute(
-        "CREATE TABLE words(deck TEXT, id INTEGER, german TEXT PRIMARY KEY, plural TEXT, english TEXT, type TEXT, gender TEXT, gcase TEXT, additional TEXT, level INTEGER)", //todo: "PRIMARY KEY" for id only makes sense if we also use it for searching!! XXX
+        "CREATE TABLE words(deck TEXT, id INTEGER, german TEXT PRIMARY KEY, plural TEXT, english TEXT, type TEXT, gender TEXT, gcase TEXT, additional TEXT, level INTEGER)", //todo: "PRIMARY KEY" for id only makes sense if we also use it for searching!! ALSO: I still have to do the indexing thing for the deck property
       );
     },
     // Set the version. This executes the onCreate function and provides a
     // path to perform database upgrades and downgrades.
     version: 1,
   );
+
   return database;
 }
 
@@ -90,6 +91,7 @@ Future<List<Word>> words() async {
   // Convert the List<Map<String, dynamic> into a List<Word>.
   return List.generate(maps.length, (i) {
     return Word(
+      deck: maps[i]['deck'],
       id: maps[i]['id'],
       german: maps[i]['german'],
       plural: maps[i]['plural'],
@@ -113,6 +115,7 @@ Future<List<Word>> rawQuery(String query) async {
   // Convert the List<Map<String, dynamic> into a List<Word>.
   return List.generate(maps.length, (i) {
     return Word(
+        deck: maps[i]['deck'],
         id: maps[i]['id'],
         german: maps[i]['german'],
         plural: maps[i]['plural'],
@@ -136,6 +139,7 @@ Future<List<Word>> queryType(String type) async {
   // Convert the List<Map<String, dynamic> into a List<Word>.
   return List.generate(maps.length, (i) {
     return Word(
+        deck: maps[i]['id'],
         id: maps[i]['id'],
         german: maps[i]['german'],
         plural: maps[i]['plural'],

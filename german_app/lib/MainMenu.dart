@@ -7,12 +7,12 @@ import 'MenuButton.dart';
 import 'Package:german_app/Lectures/LectureMenu.dart';
 
 
-void wordsPressed(BuildContext context) {
-  Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Words()),
-  );
-}
+// void wordsPressed(BuildContext context) {
+//   Navigator.push(
+//       context,
+//       MaterialPageRoute(builder: (context) => Words()),
+//   );
+// }
 
 void decksPressed(BuildContext context) {
   Navigator.push(

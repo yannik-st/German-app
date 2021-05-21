@@ -7,69 +7,19 @@ import 'Underline.dart';
 
 void _something() {}
 
-//Future<void> _something() async {
-//  var fido = Word(
-//    german: 0,
-//    english: 'Fido',
-//    gender: 35,
-//  );
-//
-//  // Insert a word into the database.
-//  await insertWord(fido);
-//
-//  // Print the list of words (only Fido for now).
-//  print(await words());
-//
-//  // Update Fido's age and save it to the database.
-//  fido = Word(
-//  german: fido.german,
-//  english: fido.english,
-//  gender: fido.gender + 7,
-//  );
-//  await updateWord(fido);
-//
-//  // Print Fido's updated information.
-//  print(await words());
-//
-//  // Delete Fido from the database.
-//  await deleteWord(fido.german);
-//
-//  // Print the list of words (empty).
-//  print(await words());
-//
-//}
-//
-//showDialog(context: context, builder: (BuildContext context) {
-//return AlertDialog(
-//title: Text(newWord.german),
-//content: Text(
-//'german: '+ _inputGerman.text +'\n'+
-//'plural: '+_inputPlural.text +'\n'+
-//'english: '+_inputEnglish.text +'\n'+
-//'type: '+_radioType +'\n'+
-//'gender: '+_radioGender +'\n'+
-//'gcase: '_radioCase +'\n'+
-//'additional:'+_inputAdditional.text),
-//actions: <Widget>[
-//FlatButton(
-//child: Text('Ok'),
-//onPressed: () {
-//Navigator.of(context).pop();
-//},
-//),
-//],
-//);
-//},);
-
 class AddWord extends StatefulWidget {
-  AddWord({Key key}) : super(key: key);
+  final String deck;
+
+  AddWord(this.deck, {Key key}) : super(key: key);
 
   @override
-  _AddWord createState() => _AddWord();
+  _AddWord createState() => _AddWord(deck);
 }
 
 class _AddWord extends State<AddWord> {
   final _formKey = GlobalKey<FormState>();
+  final String deck;
+
   TextEditingController _inputGerman = TextEditingController();
   TextEditingController _inputEnglish = TextEditingController();
   TextEditingController _inputAdditional = TextEditingController();
@@ -77,6 +27,8 @@ class _AddWord extends State<AddWord> {
   String _radioType = '';
   String _radioGender = '';
   String _radioCase = '';
+
+  _AddWord(this.deck);
 
   displayWord(Word newWord){
     showDialog(context: context, builder: (BuildContext context) {
@@ -512,6 +464,7 @@ class _AddWord extends State<AddWord> {
                     // the form is invalid.
                     if (_formKey.currentState.validate()) {
                       var newWord = Word(
+                        deck: deck,
                         id: 0,
                         german: _inputGerman.text,
                         plural: _inputPlural.text,

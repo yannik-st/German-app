@@ -16,21 +16,26 @@ void _something() async {
 }
 
 class ShowWords extends StatefulWidget {
-  ShowWords({Key key}) : super(key: key);
+  final String deck;
+
+  ShowWords(this.deck, {Key key}) : super(key: key);
 
   @override
-  _ShowWords createState() => _ShowWords();
+  _ShowWords createState() => _ShowWords(deck);
 }
 
 class _ShowWords extends State<ShowWords> {
   final _formKey = GlobalKey<FormState>();
+  final String deck;
   String _radioType = 'any';
   // String _radioHide = 'none';
 
-  void _displayWordsPressed(amount, hideDisplay) {
+  _ShowWords(this.deck);
+
+  void _displayWordsPressed(amount, hideDisplay, deck) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => DisplayWords(hideDisplay, amount)),
+      MaterialPageRoute(builder: (context) => DisplayWords(hideDisplay, amount, deck)),
     );
   }
 
@@ -258,7 +263,7 @@ class _ShowWords extends State<ShowWords> {
                       width: 0.5 * MediaQuery.of(context).size.width,
                       height: 0.08 * MediaQuery.of(context).size.height,
                       child: MaterialButton(
-                        onPressed: () => _displayWordsPressed(stateProvider.amount, stateProvider.hiddenDisplay),
+                        onPressed: () => _displayWordsPressed(stateProvider.amount, stateProvider.hiddenDisplay, deck),
                         splashColor: Colors.grey,
                         color: Colors.white30,
                         child: Text(
