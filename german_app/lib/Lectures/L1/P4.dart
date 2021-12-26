@@ -8,7 +8,7 @@ import 'package:german_app/Lectures/LectureTools.dart';
 class P4 extends StatelessWidget {
   P4();
 
-  final List<String> en = ['the man', 'the woman', 'the children', 'the apple', 'the person', 'the girl'];
+  final List<String> en = ['the man', 'the woman', 'the child', 'the apple', 'the person', 'the girl'];
   final List<String> de = ['der Mann', 'die Frau', 'das Kind', 'der Apfel', 'die Person', 'das Mädchen'];
   final List<String> de_else = ['die Männer', 'die Frauen', 'die Kinder', 'die Äpfel', 'die Personen', 'die Mädchen'];
 

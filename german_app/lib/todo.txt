@@ -1,6 +1,7 @@
 TO DO:
 
-- Visualize in which deck we are after pressing some deck.. (in the "words" menu and so on)
+line 112 in deck_menu: XXX todo: FIRST WE HAVE TO DELETE ALL WORDS IN THE DB WITH deck==deletedDeck otherwise they will be there for ever
 
+- Visualize in which deck we are after pressing some deck.. (in the "words" menu and so on)
 
 - come up with infrastrukture to change db entries - some time I'll need it

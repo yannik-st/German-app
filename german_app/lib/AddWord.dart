@@ -348,7 +348,7 @@ class _AddWord extends State<AddWord> {
                           });
                         },
                       ),
-                      Text('Preposition'),
+                      Text('Prepos.'),
                     ],
                   ),
                 ),
